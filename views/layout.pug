@@ -1,0 +1,28 @@
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet' href='/assets/bootstrap/dist/css/bootstrap-flex.css')
+  body
+    nav.navbar.navbar-light.bg-faded
+      a.navbar-brand(href="/") HexletBlogs
+      if currentUser.isGuest()
+        ul.nav.navbar-nav.float-xs-right
+          li.nav-item
+            a.nav-link(href="/session/new") Sign in
+          li.nav-item
+            a.nav-link(href="/users/new") Sign up
+      else
+        form.form-inline.float-xs-right(action='/session?_method=DELETE' method='post')
+          button.btn.btn-link(type='submit') Sign out
+        ul.nav.navbar-nav.float-xs-right
+          li.nav-item
+            a.nav-link(href="/my/posts/new") Write Post
+          li.nav-item
+            a.nav-link(href="/my/posts") My Posts
+    .container
+      .mt-1
+        while message = flash.shift()
+          div(class='alert alert-' + message.type)
+            = message.message
+      block content
