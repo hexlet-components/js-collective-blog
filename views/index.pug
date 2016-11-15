@@ -1,9 +1,9 @@
 extends layout.pug
 
 block content
-  .row
-    .col-sm-8
-      h1= message
-    .col-sm
-      .card
-        .card-body hey
+  for post in posts
+    .media.mt-2
+      .media-body
+        h4.media-heading
+          a(href=`/posts/${post.id}`)= post.title
+        = post.body

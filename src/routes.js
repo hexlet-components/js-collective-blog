@@ -9,7 +9,11 @@ import NotFoundError from './errors/NotFoundError';
 
 const initState = () => {
   const admin = new User('admin', encrypt('qwerty'));
-  return { users: [admin], posts: [] };
+  const posts = [
+    new Post(admin, 'how to write code', 'so, you need text editor'),
+    new Post(admin, 'how to debug', 'use your mind, luke'),
+  ];
+  return { users: [admin], posts };
 };
 
 const state = initState();
@@ -41,7 +45,18 @@ export default app => {
   });
 
   app.get('/', (req, res) => {
-    res.render('index');
+    const posts = state.posts;
+
+    res.render('index', { posts });
+  });
+
+  app.get('/posts/:id', (req, res) => {
+    const post = state.posts.find(post => post.id.toString() === req.params.id);
+    if (post) {
+      res.render('posts/show', { post });
+    } else {
+      next(new NotFoundError());
+    }
   });
 
   app.get('/users/new', (req, res) => {
