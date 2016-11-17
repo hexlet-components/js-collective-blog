@@ -50,7 +50,7 @@ export default app => {
     res.render('index', { posts });
   });
 
-  app.get('/posts/:id', (req, res) => {
+  app.get('/posts/:id', (req, res, next) => {
     const post = state.posts.find(post => post.id.toString() === req.params.id);
     if (post) {
       res.render('posts/show', { post });
@@ -190,7 +190,7 @@ export default app => {
 
   app.delete('/my/posts/:id', requiredAuth, (req, res) => {
     state.posts = state.posts.filter(post =>
-      !(post.user === res.locals.currentUser && post.id));
+      !(post.user === res.locals.currentUser && post.id.toString() === req.params.id));
     res.redirect('/my/posts');
   });
 

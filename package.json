@@ -36,6 +36,7 @@
     "pug": "^2.0.0-beta6"
   },
   "devDependencies": {
+    "jest-supertest-matchers": "*",
     "babel-cli": "*",
     "babel-core": "*",
     "babel-eslint": "*",

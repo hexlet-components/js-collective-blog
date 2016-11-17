@@ -5,9 +5,13 @@ block content
     table.table
       tr
         th Title
+        th Actions
       for post in posts
         tr
           td= post.title
           td
+            a(href=`/my/posts/${post.id}/edit`) Edit
+            form.form-inline.d-inline-block(action=`/my/posts/${post.id}?_method=DELETE` method='post')
+              button.btn-link(type='submit') Delete
   else
     p Пусто
