@@ -6,6 +6,7 @@ import User from './models/User';
 import Post from './models/Post';
 import Guest from './models/Guest';
 import NotFoundError from './errors/NotFoundError';
+import AccessDeniedError from './errors/AccessDeniedError';
 
 const initState = () => {
   const admin = new User('admin', encrypt('qwerty'));
@@ -20,8 +21,7 @@ const state = initState();
 
 const requiredAuth = (req, res, next) => {
   if (res.locals.currentUser.isGuest()) {
-    const error = new Error();
-    error.status = 403;
+    const error = new AccessDeniedError();
     next(error);
   } else {
     next();

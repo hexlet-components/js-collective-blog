@@ -13,7 +13,7 @@ describe('requests', () => {
   it('GET /session/new', async () => {
     const res = await request(app)
       .get('/session/new');
-    expect(res.status).toBe(200);
+    expect(res).toHaveHTTPStatus(200);
   });
 
   it('POST /session', async () => {
@@ -21,7 +21,7 @@ describe('requests', () => {
       .post('/session')
       .type('form')
       .send({ nickname: 'admin', password: 'qwerty' });
-    expect(res.status).toBe(302);
+    expect(res).toHaveHTTPStatus(302);
   });
 
   it('POST /session (errors)', async () => {
@@ -29,7 +29,7 @@ describe('requests', () => {
       .post('/session')
       .type('form')
       .send({ nickname: 'admin', password: 'qwery' });
-    expect(res.status).toBe(422);
+    expect(res).toHaveHTTPStatus(422);
   });
 
   it('DELETE /session', async () => {
@@ -40,6 +40,6 @@ describe('requests', () => {
 
     const res = await request(app)
       .delete('/session');
-    expect(res.status).toBe(302);
+    expect(res).toHaveHTTPStatus(302);
   });
 });
