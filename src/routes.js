@@ -83,7 +83,7 @@ export default app => {
     if (Object.keys(errors).length === 0) {
       const user = new User(nickname, encrypt(password));
       state.users.push(user);
-      req.flash('success', 'Success!');
+      res.flash('success', 'Success!');
       res.redirect('/');
       return;
     }
@@ -101,7 +101,7 @@ export default app => {
     const user = state.users.find(user => user.nickname === nickname);
     if (user && user.passwordDigest === encrypt(password)) {
       req.session.nickname = user.nickname;
-      req.flash('info', `Welcome, ${user.nickname}!`);
+      res.flash('info', `Welcome, ${user.nickname}!`);
       res.redirect('/');
       return;
     }
@@ -110,7 +110,7 @@ export default app => {
   });
 
   app.delete('/session', (req, res) => {
-    req.flash('info', `Good bye, ${res.locals.currentUser.nickname}`);
+    res.flash('info', `Good bye, ${res.locals.currentUser.nickname}`);
     delete req.session.nickname;
     res.redirect('/');
   });
@@ -149,7 +149,7 @@ export default app => {
     if (Object.keys(errors).length === 0) {
       const post = new Post(res.locals.currentUser, title, body);
       state.posts.push(post);
-      req.flash('success', 'Success!');
+      res.flash('success', 'Success!');
       res.redirect(`/my/posts/${post.id}/edit`);
       return;
     }
@@ -176,7 +176,7 @@ export default app => {
       if (Object.keys(errors).length === 0) {
         post.title = title;
         post.body = body;
-        req.flash('success', 'Success!');
+        res.flash('success', 'Success!');
         res.redirect(`/my/posts/${post.id}/edit`);
         return;
       }
